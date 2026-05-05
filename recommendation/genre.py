@@ -9,7 +9,7 @@ class Genre(Recommendation):
             "romance": ["Pride and Prejudice", "Me Before You"]
         }
 
-    def giveRecommendation(self):
-        genre = random.choice(list(self.data.keys()))
+    def suggest(self):
+        genre = random.choice(list(self.__data.keys()))
         recommend = random.choice(self.__data[genre])
         return {"genre":genre,"recommendation":recommend}
