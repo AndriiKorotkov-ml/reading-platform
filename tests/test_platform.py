@@ -59,5 +59,30 @@ class TestPlatform(unittest.TestCase):
         platform = ReadingPlatform(user, recommendation)
         result = platform.get_recommendations()
         self.assertIsInstance(result, dict)
+
+    def test_platform_clear_history(self):
+        user = Regular()
+        recommendation = Genre()
+        platform = ReadingPlatform(user, recommendation)
+        platform.read_content(Book())
+        platform.read_content(Poem())
+        platform.clear_history()
+        self.assertEqual(platform.get_history(), [])
+    def test_platform_change_user(self):
+        user = Regular()
+        recommendation = Genre()
+        platform = ReadingPlatform(user, recommendation)
+        platform.change_user(PremiumUser())
+        result = platform.read_content(Book())
+        self.assertIn("Premium", result)
+    def test_platform_statistics(self):
+        user = Regular()
+        recommendation = Genre()
+        platform = ReadingPlatform(user, recommendation)
+        platform.read_content(Book())
+        platform.read_content(Article())
+        platform.read_content(Poem())
+        stats = platform.get_statistics()
+        self.assertEqual(stats["total_read"], 3)
 if __name__ == "__main__":
     unittest.main()
